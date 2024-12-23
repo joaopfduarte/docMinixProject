@@ -1,8 +1,24 @@
 \begin{thebibliography}{}
 
-\bibitem[Sandel 2015]{sandel:2015}
-Sandel, M.~J. (2015).
-\newblock {\em Justi{\c{c}}a: o que {\'e} fazer a coisa certa}.
-\newblock Editora Jos{\'e} Olympio.
+\bibitem[Beletti 2015]{creating_syscall}
+Beletti (2015).
+\newblock Creating a system call - english.
+\newblock
+  \url{https://github.com/rhiguita/lab-minix/blob/master/eng_us/Seen2-Creating_a_System_Call-English.txt}.
+\newblock Guide available on GitHub for learning purposes related to MINIX
+  system calls.
+
+\bibitem[Tanenbaum 2024]{minix3docs}
+Tanenbaum, A.~S. (2024).
+\newblock Minix 3 documentation.
+\newblock \url{https://www.minix3.org/doc/}.
+\newblock Official documentation for MINIX 3, a microkernel-based operating
+  system.
+
+\bibitem[Tanenbaum and Bos 2014]{tanenbaum_modern_os}
+Tanenbaum, A.~S. and Bos, H. (2014).
+\newblock {\em Modern Operating Systems}.
+\newblock Pearson Education, Upper Saddle River, NJ, 4th edition.
+\newblock Available in multiple editions and widely used in academia.
 
 \end{thebibliography}

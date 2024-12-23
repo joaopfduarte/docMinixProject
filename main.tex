@@ -4,7 +4,18 @@
 
 \usepackage{graphicx,url}
  
-\usepackage[utf8]{inputenc}  
+\usepackage[utf8]{inputenc}
+\usepackage{holtxdoc}
+\usepackage{hyperref}
+\usepackage{lstdoc}
+
+\hypersetup{
+    colorlinks=true,      % ativa as cores dos links
+    linkcolor=black,       % cor dos links internos
+    urlcolor=black,        % cor dos links externos
+    citecolor=black        % cor das citações
+}
+
      
 \sloppy
 
@@ -22,28 +33,58 @@ Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG)\\
 
 \maketitle
 
-\section{O Conto do Bonde Desgovernado} 
+\section{Implementação da Syscall no SO Minix3}
 
 \begin{abstract}
-  The text follows the style of argumentative dissertation, containing two pages and     four paragraphs that are divided in: Introduction, first case, second case and         conclusion. The text model used was made available in the official domain of SBC       (Sociedade Brasileira de Computação). The purpose of the text is to inform the         author's opinion on two situations cited in Michael J. Sandel's book, "Justice -       What it is to do a certain thing", and explain its reasons.
+    In Operating Systems, system calls, \texttt{Syscalls}, are functions renewed to perform some type of specific service in favor of the processes carried out by the OS.
+    With this same objective, the present study presents the implementation of a \texttt{Syscall}, which we will call \textbf{useless}, within the Minix3.2.1 Process Manager Server, for purposes
+    study on this process.
 \end{abstract}
      
-\begin{resumo} 
-  O texto segue o estilo de dissertação argumentativa, contendo duas páginas e quatro   parágrafos que se dividem em introdução, primeiro caso, segundo caso e                 conclusão. O modelo de texto utilizado foi o disponibilizado no domínio               oficial  da SBC(Sociedade Brasileira de Computação). O objetivo do texto é             informar a  opinião do autor sobre duas situações citadas no livro “Justiça - o que   é fazer a coisa certa” de Michael J. Sandel, e explicar seus motivos.
+\begin{resumo}
+Em Sistemas Operacionais, chamadas de sistema, \texttt{Syscalls}, são funções implementadas para realizar algum tipo de serviço específico em favor dos processos realizados pelo SO.
+    Com este mesmo objetivo, o presente estudo apresenta a implementação de uma \texttt{Syscall}, que a chamaremos de \textbf{inútil}, dentro do Servidor Gerenciador de Processo do Minix3.2.1, para fins
+de estudo sobre este processo.
 \end{resumo}
 
 
-\subsection{Introdução}
+\subsection{Introdução} %Configuracoes e ambiente
 
-O texto a ser tem como objetivo demonstrar a minha opinião para com a história do   bonde desgovernado, na qual ele se encontra em duas situações e em cada uma delas   deve escolher entre duas alternativas, explicando motivos e razões das quais         resultaram suas escolhas.
+O presente texto, com objetivo de instriução, serve para que qualquer programados com o intuito de estudar mais sobre os conceitos relacionados a Sistemas Operacionais
+, através do uso do Minix, em sua versão $3.2.1$, possa realizar todos os passos necessários para implementar, desde o início, a criação de uma chamada de sistema. Em
+maiores detalhes, temos aqui as referências \cite{creating_syscall} e \cite{tanenbaum_modern_os} como fontes base para entendimento do Kernel do sistema operacional em uso,
+como também da documentação presente no site do Minix para desenvolvedores conforme \cite{minix3docs}. \href{https://www.minix3.org/doc/}{Link da documentação}.
+%
 
-\subsection{Primeiro Caso} \label{sec:firstpage}
+Sobre a ambientação necessária para o desenvolvimento deste projeto, o programador deve realizar a instalação de uma máquina virtual minix, na versão correta para este projeto
+e realizar todas as etapas de instalação do sistema operacional conforme documentação oficial supracitada. O link referente à plataforma onde deve ser criada a máquina virtual,
+como também ao local onde estará a versão correta do sistema operacional e a parte da documentação onde constam as etapas de instalação do sistema, podem ser consultados a seguir:
+\href{https://www.virtualbox.org/wiki/Downloads}{[Virtual Box]}, \href{https://wiki.minix3.org/doku.php?id=www:download:start}{[Minix versão 3.2.1]} e \href{https://wiki.minix3.org/doku.php?id=usersguide:runningonvirtualbox}{[processo de instalação]}.
 
-Na primeira versão, dentro do contexto inserido pelo livro, ao estar guiando um bonde desgovernado deve se escolher entre atropelar cinco operários em uma linha ou atropelar um único operário em uma linha alternativa. Com base nos ensinamentos a mim repassados se houvesse a possibilidade de não matar ninguém, essa seria a minha escolha. Mas dentre as alternativas descritas acredito que pelo choque da situação eu não teria capacidade de escolher logicamente e ficaria paralisado. Porém assim como o algoritmo de uma Inteligência Artificial, que realiza escolhas de acordo com a proximidade da escolha que seria a “certa”, creio que a minha escolha seria desviar o bonde para a linha que continha apenas um operário, assumindo o risco de matar menos pessoas logo evitando assim uma tragédia maior e que seria a escolha menos errada e, além de haver a possibilidade de o operário escapar.
 
-\subsection{Segundo Caso}
+\subsection{Primeiro caso} \label{sec:1sec}
+Inicialmente, para dar início ao processo de criação da chamada de sistema, tem-se como focos de alteração e estudo para fins de entendimento do processo interno do
+Kernel do sistema operacional, a aplicação das seguintes rotas para atualização de dados e manipulação.
+
+\begin{enumerate}
+    \item /callnr.h: Aqui está a listagem de todas as chamadas de sistema presentes no Minix.
+    \item /table.c: Aqui estão os nomes de cada uma das rotinas das chamadas de sistema do Minix.
+    \item /proto.h: Protótipo de todas as rotinas de chamadas de sistema do sistema operacinal.
+    \item /misc.c: Chamada de sistema de todas as Syscalls do tipo \texttt{Misc}.
+    \item /minhachamadalib.h: Este é o "include file" que realiza a chamada da chamada de sistema \texttt{inútil}.
+    \item /teste1.c: Arquivo de teste criado para realizar o teste da chamada \texttt{inútil}.
+\end{enumerate}
+
+
+\subsection{Segundo Caso} \label{sec:2sec}
 
 Na segunda versão, o livro insere um contexto no qual você se encontra em uma ponte acima dos trilhos do bonde, e deve escolher entre ver os cinco operários serem atropelados ou empurrar um homem corpulento da ponte sobre os trilhos com o objetivo de parar o bonde afim de salvar os cinco operários. Com base nos ensinamentos a mim repassados, considero essa segunda versão mais complicada, embora ela tenha uma essência parecida com a primeira, a de escolher entre atropelar cinco operários ou apenas um, ela envolve uma terceira pessoa neutra, mesmo com a ideia de empurrar uma pessoa para a morte sendo macabra, creio que ainda assim escolheria ela, pois os cinco operários teriam uma chance maior de escapar do atropelamento.
+
+\subsection{Terceiro Caso} \label{sec:3sec}
+\subsection{Quarto Caso} \label{sec:4sec}
+\subsection{Quinto Caso} \label{sec:5sec}
+\subsection{Sexto Caso} \label{sec:6sec}
+\subsection{Sétimo Caso} \label{sec:7sec}
 
 \subsection{Conclusão}
 
@@ -51,24 +92,11 @@ Essa pequena história nos mostra que por mais que tentemos escolher o que é co
 
 \subsection{Referências}
 
-\cite{sandel:2015}.
 
 \bibliographystyle{sbc}
+
+\newpage
 \bibliography{sbc-template}
-
-\newpage
-
-\section{Delineando o perfil dos alunos egressos do BCC do IFCE - Campus Aracati.}
-
-
-\subsection{Introdução}
-
-
-\newpage
-\section{Trabalho}
-
-
-
 
 
 
